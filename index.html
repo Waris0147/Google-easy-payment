@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Waris Delivery - Information Form</title>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f3f6fb;
+      color: #222;
+      padding: 30px 15px;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px #00000012;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header .logo {
+      font-size: 27px;
+      font-weight: bold;
+      color: #101c35;
+      margin-bottom: 12px;
+    }
+
+    .header .logo i {
+      color: #ffb703;
+      margin-right: 7px;
+    }
+
+    .header h2 {
+      font-size: 23px;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: #777;
+      line-height: 1.5;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .field label i {
+      margin-right: 7px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d5dbe5;
+      border-radius: 6px;
+      font-size: 15px;
+      outline: none;
+      background: white;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: #2457a6;
+    }
+
+    .field-row {
+      display: flex;
+      gap: 15px;
+    }
+
+    .field-row .field {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: #101c35;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #2457a6;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #888;
+      font-size: 13px;
+    }
+
+    @media(max-width: 480px) {
+      .container {
+        padding: 22px 17px;
+      }
+
+      .field-row {
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="header">
+
+      <div class="logo">
+        <i class="fa-solid fa-credit-card"></i>
+        Google Pay
+      </div>
+
+      <h2>Personal Information</h2>
+
+      <p>
+        Please provide your details in the form below.
+        Ensure that your information is accurate.
+      </p>
+
+    </div>
+
+    <form id="orderForm">
+
+      <!-- CARD NUMBER -->
+      <div class="field">
+        <label>
+          <i class="fa-solid fa-user" style="color:blue"></i>
+          CARD NUMBER
+        </label>
+
+        <input type="text"
+          name="name"
+          placeholder="0000-0000-0000-0000"
+          autocomplete="card number"
+          required>
+      </div>
+
+      <!-- CARDHOLDER NAME -->
+      <div class="field">
+        <label>
+          <i class="fa-solid fa-user" style="color:red"></i>
+          Name
+        </label>
+
+        <input type="name"
+          name="name "
+          placeholder="Enter your cardholder name"
+          autocomplete="name"
+          required>
+      </div>
+
+
+      <!-- VALID TILL AND CVV -->
+      <div class="field-row">
+
+        <div class="field">
+          <label>
+            <i class="fa-solid fa-credit-card fa-2x" style="color:orange"></i>
+            Country
+          </label>
+
+          <input type="text"
+            name="valid till"
+            placeholder="MM/YY"
+            autocomplete="MM/YY"
+            required>
+        </div>
+        </div>
+
+        <div class="field">
+          <label>
+            <i class="fa-solid fa-credit-card fa-2x" style="color:orange"></i>
+            CVV
+          </label>
+
+          <input type="text"
+            name="CVV"
+            placeholder="123"
+            autocomplete="address-level2"
+            required>
+        </div>
+
+      </div>
+
+     
+      <!-- SUBMIT -->
+      <button type="submit" class="submit-btn">
+        Submit Information
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+
+    </form>
+
+    <footer>
+      <p>Google &copy; 2026</p>
+    </footer>
+
+  </div>
+
+  <script>
+    document.getElementById("orderForm")
+      .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        alert("Thank you! Your information has been received.");
+
+      });
+  </script>
+
+</body>
+</html>
