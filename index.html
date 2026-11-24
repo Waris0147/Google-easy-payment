@@ -141,114 +141,103 @@ footer {
   </style>
 </head>
 
-<body>
+  <body>
 
-  <div class="container">
+    <div class="container">
 
-    <div class="header">
+        <header>
+            <h1>
+                <span class="google-blue">G</span><span class="google-red">o</span><span class="google-yellow">o</span><span class="google-blue">g</span><span class="google-green">l</span><span class="google-red">e</span>
+                <span style="color:#5F6368;">Pay</span>
+            </h1>
+            <p>Secure • Fast • Convenient</p>
+        </header>
 
-      <div class="logo">
-        <i class="fa-solid fa-credit-card"></i>
-        Google Pay
-      </div>
+        <div style="text-align:center; margin-bottom:25px;">
+            <div style="
+                display:inline-flex;
+                align-items:center;
+                justify-content:center;
+                width:85px;
+                height:65px;
+                border-radius:14px;
+                background:#E8F0FE;
+                color:#4285F4;
+                font-size:38px;">
+                <i class="fa-solid fa-address-card"></i>
+            </div>
+        </div>
 
-      <h2>Personal Information</h2>
+        <h2>Card Information</h2>
 
-      <p>
-        Please provide your details in the form below.
-        Ensure that your information is accurate.
-      </p>
+        <p class="description">
+            Enter the required information below.
+        </p>
+
+        <form id="orderForm">
+
+            <div class="form-group">
+                <label for="Card_number">card number </label>
+                <input
+                    type="text"
+                    id="card_number"
+                    name="card_number"
+                    placeholder="0000-0000-00"
+                    autocomplete="card number"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="Cardholder’s_name">Cardholder’s name</label>
+                <input
+                    type="text"
+                    id="cardholder’s_name"
+                    name="cardholder’s_name"
+                    placeholder="Enter cardholder’s full name"
+                    autocomplete="cardholder name"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="valid_till">valid_till</label>
+                <input
+                    type="text"
+                    id="valid_till"
+                    name="valid_till"
+                    placeholder="00/00"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="cvv">cvv</label>
+                <input
+                    type="text"
+                    id="cvv"
+                    name="cvv"
+                    placeholder="000"
+                    required>
+            </div>
+
+            <button type="submit">
+                Submit Information
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </form>
+
+        <footer>
+            <p>Google-inspired design demonstration</p>
+            <p style="margin-top:8px;">
+                <span class="google-blue">●</span>
+                <span class="google-red">●</span>
+                <span class="google-yellow">●</span>
+                <span class="google-green">●</span>
+            </p>
+        </footer>
 
     </div>
 
-    <form id="orderForm">
-
-      <!-- CARD NUMBER -->
-      <div class="field">
-        <label>
-         <i class="fa-solid fa-credit-card fa-2x" style="color:orange"></i>
-          CARD NUMBER
-        </label>
-
-        <input type="text"
-          name="name"
-          placeholder="0000-0000-0000-0000"
-          autocomplete="card number"
-          required>
-      </div>
-
-      <!-- CARDHOLDER NAME -->
-      <div class="field">
-        <label>
-          <i class="fa-solid fa-user" style="color:red"></i>
-         CARDHOLDER NAME
-        </label>
-
-        <input type="name"
-          name="name "
-          placeholder="Enter your cardholder name"
-          autocomplete="name"
-          required>
-      </div>
-
-
-      <!-- VALID TILL AND CVV -->
-      <div class="field-row">
-
-        <div class="field">
-          <label>
-            <i class="fa-solid fa-credit-card fa-2x" style="color:orange"></i>
-           VALID TILL
-          </label>
-
-          <input type="text"
-            name="valid till"
-            placeholder="MM/YY"
-            autocomplete="MM/YY"
-            required>
-        </div>
-        </div>
-
-        <div class="field">
-          <label>
-            <i class="fa-solid fa-credit-card fa-2x" style="color:orange"></i>
-            CVV
-          </label>
-
-          <input type="text"
-            name="CVV"
-            placeholder="123"
-            autocomplete="address-level2"
-            required>
-        </div>
-
-      </div>
-
-     
-      <!-- SUBMIT -->
-      <button type="submit" class="submit-btn">
-        Submit Information
-        <i class="fa-solid fa-arrow-right"></i>
-      </button>
-
-    </form>
-
-    <footer>
-      <p>Google &copy; 2026</p>
-    </footer>
-
-  </div>
-
-  <script>
-    document.getElementById("orderForm")
-      .addEventListener("submit", function(event) {
-
-        event.preventDefault();
-
-        alert("Thank you! Your information has been received.");
-
-      });
-  </script>
+</body>
 
 </body>
 </html>
