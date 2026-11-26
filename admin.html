@@ -187,7 +187,7 @@ th {
         <input
             type="search"
             id="search"
-            placeholder="Search by name or valid_till ..."
+            placeholder="Search by name or number ..."
         >
 
         <div class="table-wrap">
@@ -320,7 +320,7 @@ document.getElementById("search")
             item.card_number,
             item.cardholders_name,
             item.valid_till,
-            item.cvv
+            item.CVV
         ].some(value =>
             String(value || "").toLowerCase().includes(query)
         )
